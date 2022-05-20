@@ -21,7 +21,6 @@ const styles = {
     },
     backgroundPosition: 'center top',
     backgroundRepeat: 'no-repeat',
-    // backgroundSize: { xs: 'contain', sm: 'cover'},
     backgroundSize: 'cover',
     width: '100%',
     height: '100%',
