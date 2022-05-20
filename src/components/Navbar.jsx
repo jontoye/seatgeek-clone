@@ -11,6 +11,8 @@ const Navbar = () => {
       alignItems: 'center',
       height: '80px',
       padding: '0 60px',
+      position: 'relative',
+      zIndex: 1,
     },
     navGroup: {
       display: 'flex',
