@@ -1,4 +1,4 @@
-import { Container } from '@mui/material'
+import { Box } from '@mui/material'
 import React from 'react'
 import FeaturedGrid from '../components/FeaturedGrid'
 import Footer from '../components/Footer'
@@ -7,12 +7,12 @@ import Navbar from '../components/Navbar'
 
 const Home = () => {
   return (
-    <Container>
+    <Box sx={{position: 'relative'}}>
       <Navbar />
       <Header />
       <FeaturedGrid />
       <Footer />
-    </Container>
+    </Box>
   )
 }
 

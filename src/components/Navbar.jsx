@@ -10,16 +10,19 @@ const Navbar = () => {
       justifyContent: 'space-between',
       alignItems: 'center',
       height: '80px',
-      padding: '0 60px'
+      padding: '0 60px',
     },
     navGroup: {
       display: 'flex',
       alignItems: 'center',
       gap: '15px',
+      color: '#eee',
       '& .MuiButton-root': {
+        color: 'inherit',
         textTransform: 'none',
         fontSize: '15px',
         width: '78px',
+        fontWeight: 400,
       },
     },
     btnGroup: {
@@ -39,7 +42,12 @@ const Navbar = () => {
     loginLogo: {
       color: 'secondary',
       display: { xs: 'block', md: 'none' },
-      border: '1px solid red',
+      backgroundColor: '#eee',
+      transition: 'all 0.2s ease',
+      '&:hover': {
+        backgroundColor: '#eee',
+        transform: 'scale(1.04)'
+      }
     },
     extraBtns: {
       display: { xs: 'none', reg: 'block' }
