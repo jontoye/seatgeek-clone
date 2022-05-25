@@ -37,7 +37,6 @@ const styles = {
   },
   heroContent: {
     position: 'relative',
-    zIndex: 1,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

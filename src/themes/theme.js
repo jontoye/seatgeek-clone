@@ -18,5 +18,14 @@ export const theme = createTheme({
       lg: 1300,
       xl: 1536,
     }
+  },
+  components: {
+    MuiPopover: {
+      styleOverrides: {
+        paper: {
+          borderRadius: 10,
+        }
+      }
+    }
   }
 })
