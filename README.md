@@ -3,5 +3,5 @@ This is a clone of [seatgeek.com](https://www.seatgeek.com), a ticketing platfor
 
 The purpose of this project was to practice building a frontend application using React. 
 
-All the data comes from seat geek's API with the following endpoint: [https://api.seatgeek.com/2](https://api.seatgeek.com/2)
+All the data comes from seat geek's API found here: [https://platform.seatgeek.com/](https://platform.seatgeek.com/)
 
