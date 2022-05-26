@@ -36,3 +36,19 @@ export const getTopCategories = async () => {
   }
 
 }
+
+export const getCurrentCityName = async (coords) => {
+  const [lng, lat] = coords;
+  const URL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${process.env.REACT_APP_MAPBOX_API_KEY}&types=place&limit=1`;
+
+  const { data } = await axios.get(URL);
+  return data
+}
+
+export const getAutocompleteCities = async (search) => {
+  const URL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?access_token=${process.env.REACT_APP_MAPBOX_API_KEY}&country=CA,US&types=place&limit=10`;
+
+  const { data }= await axios.get(URL);
+  return data;
+}
+

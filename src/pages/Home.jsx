@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getTopCategories } from '../api'
+import { getTopCategories, getCurrentCityName } from '../api'
 import { Box } from '@mui/material'
 
 import FeaturedGrid from '../components/FeaturedGrid'
@@ -9,8 +9,9 @@ import Navbar from '../components/Navbar'
 import Filter from '../components/Filter'
 
 const Home = () => {
+  const [coords, setCoords] = useState([null, null])
   const [topCategories, setTopCategories] = useState([])
-  const [filterLocation, setFilterLocation] = useState('Toronto, ON')
+  const [filterLocation, setFilterLocation] = useState('')
   const [filterDate, setFilterDate] = useState(new Date())
 
   useEffect(() => {
@@ -19,6 +20,24 @@ const Home = () => {
       .catch(error => console.error(error))
   },[])
 
+  // Get user's current coordinates
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(pos => {
+      setCoords([pos.coords.longitude, pos.coords.latitude]);
+    })
+  }, [])
+
+  // Use reverse geocoding to get city name from coords
+  useEffect(() => {
+    getCurrentCityName(coords)
+      .then(data => {
+        const city = data.features[0].text;
+        const region = data.features[0].context.find(item => item.id.startsWith('region')).short_code.replace(/\w*[-]/, '')
+        setFilterLocation(`${city}, ${region}`)
+      })
+      .catch(err => console.error(err));
+  },[coords])
+
   return (
     <Box sx={{position: 'relative'}}>
       <Navbar />
@@ -26,8 +45,8 @@ const Home = () => {
       <Filter 
         location={filterLocation}
         date={filterDate}
-        setLocation={setFilterLocation}
         setDate={setFilterDate}
+        setCoords={setCoords}
       />
       <FeaturedGrid />
       <Footer />

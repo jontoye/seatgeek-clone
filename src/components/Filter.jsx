@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
-import { Button, Container, InputAdornment, Modal, OutlinedInput, Paper, Popover, TextField, Typography } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search'
+import { Button, Container, IconButton, InputAdornment, MenuItem, MenuList, OutlinedInput, Paper, Popover, TextField, Typography } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { format } from 'date-fns';
 import {  styled } from '@mui/system'
+import { getAutocompleteCities } from '../api';
 
 const Filter = ({
   location,
   date,
-  setLocation,
   setDate,
+  setCoords,
 }) => {
 
   const [dateBtnText, setDateBtnText] = useState('Filter by date');
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
   const [cityFilterAnchor, setCityFilterAnchor] = useState(null);
+  const [cityInput, setCityInput] = useState('');
+  const [autocompleteOptions, setAutocompleteOptions] = useState([])
 
   const onDateChange = (newDate) => {
     setDate(newDate);
@@ -29,6 +33,23 @@ const Filter = ({
 
   const handleCityClose = () => {
     setCityFilterAnchor(null)
+  }
+
+  const handleInputChange = async (event) => {
+    setCityInput(event.target.value)
+    if (event.target.value.length > 2) {
+      const { features } = await getAutocompleteCities(event.target.value)
+      const options = features.map(place => place)
+      setAutocompleteOptions(options)
+    }
+    if (event.target.value.length <=2) {
+      setAutocompleteOptions([])
+    }
+  }
+
+  const clearCitySearch = () => {
+    setCityInput('');
+    setAutocompleteOptions([]);
   }
 
   const isCitySearchOpen = Boolean(cityFilterAnchor)
@@ -69,16 +90,48 @@ const Filter = ({
           sx={{ marginTop: '10px' }}
         >
             <OutlinedInput
+              autoFocus
               size='small'
               variant='outlined'
               sx={{ width: '320px', borderRadius: '50px', margin: '20px 10px' }}
               placeholder='Search by city...'
+              value={cityInput}
+              onChange={handleInputChange}
               startAdornment={
                 <InputAdornment position='start'>
                   <SearchIcon color='primary' />
                 </InputAdornment>
               }
-            />        
+              endAdornment={
+                <InputAdornment position='end' >
+                  <IconButton size='small' onClick={clearCitySearch}>
+                    <CloseIcon color='secondary' />
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            {autocompleteOptions.length > 0 &&
+              <Paper sx={{height: '200px', overflow: 'auto' }}>
+                <MenuList>
+                  {autocompleteOptions.map((place) => {
+                    const city = place.text;
+                    const region = place.context.find(item => item.id.startsWith('region')).short_code.replace(/\w*[-]/, '')
+                    return (
+                      <MenuItem 
+                        key={place.id}
+                        onClick={() => {
+                          setCoords(place.center)
+                          clearCitySearch()
+                          handleCityClose()
+                        }}
+                      >
+                        {city}, {region}
+                      </MenuItem>
+                    )
+                  })}
+                </MenuList>  
+              </Paper>        
+            }
         </Popover>
 
         <FilterButton 
