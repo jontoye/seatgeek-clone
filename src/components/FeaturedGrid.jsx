@@ -38,7 +38,7 @@ const FeaturedGrid = ({ categories, loading, city, date }) => {
 
   
   return (
-    <Container>
+    <Container sx={{ marginBottom: '120px' }}>
       <FeaturedRow title='Categories' items={categories} loading={loading} type='categories'/>
       <FeaturedRow title='Sports' items={sports} loading={loading} type='events'/>
       <FeaturedRow title='Concerts' items={concerts} loading={loading} type='events'/>

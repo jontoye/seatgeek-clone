@@ -40,7 +40,8 @@ const Footer = () => {
 
   return (
     <>
-      <Grid container>
+    <hr />
+      <Grid container sx={{ marginTop: '40px' }}>
         <Grid item xs={12} md={6} order={{ xs: 1, md: 2 }}>
           <Grid container sx={{ padding: '35px'}}>
             <Grid item xs={6} md={4} sx={styles.section}>
