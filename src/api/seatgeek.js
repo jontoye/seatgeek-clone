@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://api.seatgeek.com/2';
+// const BASE_URL = 'https://api.seatgeek.com/2';
 const AUTH = {
   username: process.env.REACT_APP_SEATGEEK_API_KEY,
   password: '',
@@ -26,7 +26,7 @@ export const getTopCategories = async () => {
   try {
     const {
       data: { taxonomies },
-    } = await axios.get(`${BASE_URL}/taxonomies`, { auth: AUTH });
+    } = await axios.get(`/taxonomies`, { auth: AUTH });
 
     const categories = taxonomies.filter(
       (cat) => TOP_CATEGORIES.get(cat.short_name) || TOP_CATEGORIES.get(cat.name)
@@ -42,7 +42,7 @@ export const getTopCategories = async () => {
 export const getEvents = async (type, city, date) => {
   try {
     const { data } = await axios.get(
-      `${BASE_URL}/events?taxonomies.name=${type}&venue.city=${city}&datetime_utc.gt=${date.toISOString()}`,
+      `/events?taxonomies.name=${type}&venue.city=${city}&datetime_utc.gt=${date.toISOString()}`,
       { auth: AUTH }
     );
 
