@@ -11,7 +11,7 @@ const styles = {
 
     position: 'relative',
     width: '100vw',
-    height: {xs: '60vh', md: '70vh'},
+    height: '500px',
 
     backgroundColor: '#000',
     transform: 'translateY(-80px)'

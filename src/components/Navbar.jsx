@@ -13,6 +13,8 @@ const Navbar = () => {
       padding: '0 60px',
       position: 'relative',
       zIndex: 1,
+      maxWidth: '1300px',
+      margin: '0 auto'
     },
     navGroup: {
       display: 'flex',
