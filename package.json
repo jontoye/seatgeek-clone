@@ -1,7 +1,6 @@
 {
   "name": "seat-geek-clone",
   "version": "0.1.0",
-  "proxy": "https://api.seatgeek.com/2",
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",
