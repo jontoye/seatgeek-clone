@@ -27,7 +27,7 @@ const HeaderSearchDropdown = ({ categories }) => {
     <Paper sx={[styles.container]}>
       <MenuList>
         <MenuItem disabled>Browse Categories</MenuItem>
-        {categories.map(category => (
+        {categories?.map(category => (
           <MenuItem key={category.id}>
             <ListItemIcon sx={[styles.listIcon]}>
               <img src={category.images['136x136']} alt={`${category.name} icon`} width='100%'/>
