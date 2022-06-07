@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.js": "/seatgeek-clone/static/js/main.1c1d36bd.js",
+    "static/media/google.png": "/seatgeek-clone/static/media/google.f902960a94878ee0da67.png",
+    "static/media/apple.svg": "/seatgeek-clone/static/media/apple.8c4986ee4828b47d16f5cd694ef065f2.svg",
+    "static/media/logo.svg": "/seatgeek-clone/static/media/logo.4d9136274f475c18cd285aa407bcc96c.svg",
+    "index.html": "/seatgeek-clone/index.html",
+    "main.1c1d36bd.js.map": "/seatgeek-clone/static/js/main.1c1d36bd.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.1c1d36bd.js"
+  ]
+}
