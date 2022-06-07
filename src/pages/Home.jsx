@@ -61,6 +61,8 @@ const Home = () => {
         <FeaturedGrid 
           categories={topCategories}  
           loading={loadingCategories}
+          city={filterLocation.toLowerCase().split(',')[0]}
+          date={filterDate}
         />
       }
       <Footer />

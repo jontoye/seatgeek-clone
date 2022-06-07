@@ -1,7 +1,8 @@
-import { Box, Card, CardHeader, CardMedia, Stack, Typography, Skeleton } from '@mui/material'
-import React, { useMemo, useState } from 'react'
-import { Pagination } from './Pagination'
+import { Box, Card, CardContent, CardMedia, Stack, Typography, Skeleton } from '@mui/material';
+import React, { useMemo, useState } from 'react';
+import { Pagination } from './Pagination';
 import { keyframes } from '@mui/system';
+import moment from 'moment';
 
 const slide = keyframes`
   from {
@@ -17,7 +18,7 @@ const styles = {
     overflow: 'hidden'
   },
   card: {
-    maxWidth: '350px',
+    width: '350px',
     marginRight: '15px',
     borderRadius: '15px',
     position: 'relative',
@@ -49,20 +50,18 @@ const CardSkeleton = ({ cardsToRender }) => {
   )
 }
 
-const FeaturedRow = ({ title, categories, loading }) => {
+const FeaturedRow = ({ title, items, loading, type }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const CARDS_PER_PAGE = 4;
 
   const currentCardsShowing = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * CARDS_PER_PAGE;
     const lastPageIndex = firstPageIndex + CARDS_PER_PAGE;
-    return categories.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, categories])
-
-  console.log(categories)
+    return items.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, items])
 
   return (
-    <Box>
+    <Box sx={{ marginBottom: '50px' }}>
       <Box 
         display='flex' 
         justifyContent='space-between' 
@@ -70,7 +69,7 @@ const FeaturedRow = ({ title, categories, loading }) => {
       >
         <Typography variant='h6'>{title}</Typography>
         <Pagination 
-          totalCount={categories.length}
+          totalCount={items.length}
           currentPage={currentPage}
           pageSize={CARDS_PER_PAGE}
           onPageChange={(page) => setCurrentPage(page)}
@@ -82,15 +81,26 @@ const FeaturedRow = ({ title, categories, loading }) => {
           loading ? (
             <CardSkeleton cardsToRender={4} />
           ) : (
-            currentCardsShowing.map(cat => (
-              <Card key={cat.id} sx={[styles.card]}>
+            currentCardsShowing.map(item => (
+              <Card key={item.id} sx={[styles.card]}>
                 <CardMedia
                   component='img'
-                  image={cat.image}
-                  alt={cat.name}
+                  height="200px"
+                  image={type === 'categories' ? item.image : item.performers[0].image}
+                  alt={type === 'categories' ? item.name : item.short_title}
                   sx={[styles.cardImg]}
                 />
-                <Typography variant="subtitle" sx={styles.cardTitle}>{cat.name}</Typography>
+                {type === 'categories' ? (
+                  <Typography variant="subtitle" sx={styles.cardTitle}>{item.name}</Typography>
+                ):
+                  (
+                    <CardContent>
+                      <Typography><strong>{item.short_title}</strong></Typography>
+                      <Typography color="gray">{moment(item.datetime_local).format('MMM D')} • {item.venue.name}</Typography>
+                      <Typography>From ${item.stats.lowest_price}</Typography>
+                    </CardContent>
+                  )
+                }
               </Card>
             ))
           )

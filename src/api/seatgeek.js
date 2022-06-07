@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://api.seatgeek.com/2'
+const BASE_URL = 'https://api.seatgeek.com/2';
 const AUTH = {
   username: process.env.REACT_APP_SEATGEEK_API_KEY,
-  password: ''
-}
+  password: '',
+};
 const TOP_CATEGORIES = new Map([
   ['Concerts', 1],
   ['NFL', 1],
@@ -20,19 +20,34 @@ const TOP_CATEGORIES = new Map([
   ['Tennis', 1],
   ['Fighting', 1],
   ['Golf', 1],
-])
+]);
 
 export const getTopCategories = async () => {
   try {
-    const { data: { taxonomies } } = await axios.get(`${BASE_URL}/taxonomies`, { auth: AUTH })
+    const {
+      data: { taxonomies },
+    } = await axios.get(`${BASE_URL}/taxonomies`, { auth: AUTH });
 
-    const categories = taxonomies.filter(cat => TOP_CATEGORIES.get(cat.short_name) || TOP_CATEGORIES.get(cat.name))
-    categories.sort((a, b) => b.stats.event_count - a.stats.event_count)
+    const categories = taxonomies.filter(
+      (cat) => TOP_CATEGORIES.get(cat.short_name) || TOP_CATEGORIES.get(cat.name)
+    );
+    categories.sort((a, b) => b.stats.event_count - a.stats.event_count);
 
-    return categories
-    
+    return categories;
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
+};
 
-}
+export const getEvents = async (type, city, date) => {
+  try {
+    const { data } = await axios.get(
+      `${BASE_URL}/events?taxonomies.name=${type}&venue.city=${city}&datetime_utc.gt=${date.toISOString()}`,
+      { auth: AUTH }
+    );
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
