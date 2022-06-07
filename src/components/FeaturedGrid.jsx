@@ -2,14 +2,14 @@ import { Box, Container } from '@mui/material'
 import React from 'react'
 import FeaturedRow from './FeaturedRow'
 
-const FeaturedGrid = () => {
+const FeaturedGrid = ({ categories, loading }) => {
   return (
-    <Container>
-      <FeaturedRow title='Categories' />
-      <FeaturedRow title='Sports' />
+    <Container sx={{height: '100vh'}}>
+      <FeaturedRow title='Categories' categories={categories} loading={loading}/>
+      {/* <FeaturedRow title='Sports' />
       <FeaturedRow title='Concerts' />
       <FeaturedRow title='Broadway Shows' />
-      <FeaturedRow title='Comedy' />
+      <FeaturedRow title='Comedy' /> */}
     </Container>
   )
 }

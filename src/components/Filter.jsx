@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Container, IconButton, InputAdornment, MenuItem, MenuList, OutlinedInput, Paper, Popover, TextField, Typography } from '@mui/material';
+import { Button, Container, IconButton, InputAdornment, MenuItem, MenuList, OutlinedInput, Paper, Popover, Skeleton, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -67,7 +67,18 @@ const Filter = ({
         <Typography variant='subtitle' color='textSecondary'>
           Browse Events
         </Typography>
-        <Typography mb={2} sx={{ fontWeight: 500 }} variant='h4'>{location}</Typography>
+
+
+        {
+          location ? (
+            <Typography mb={2} sx={{ fontWeight: 500 }} variant='h4'>{location}</Typography>
+          ) : (
+            <Skeleton sx={{ marginBottom: 2}} width='100%' variant='rectangular' animation='wave'>
+              <Typography>.</Typography>
+            </Skeleton>
+          )
+        }
+        
 
         <FilterButton
           id='cityBtn'

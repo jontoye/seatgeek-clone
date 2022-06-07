@@ -9,14 +9,20 @@ import Navbar from '../components/Navbar'
 import Filter from '../components/Filter'
 
 const Home = () => {
-  const [coords, setCoords] = useState([null, null])
-  const [topCategories, setTopCategories] = useState([])
-  const [filterLocation, setFilterLocation] = useState('')
-  const [filterDate, setFilterDate] = useState(new Date())
+  const [coords, setCoords] = useState([]);
+
+  const [topCategories, setTopCategories] = useState([]);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+
+  const [filterLocation, setFilterLocation] = useState('');
+  const [filterDate, setFilterDate] = useState(new Date());
 
   useEffect(() => {
     getTopCategories()
-      .then(data => setTopCategories(data))
+      .then(data => {
+        setTopCategories(data);
+        setLoadingCategories(false);
+      })
       .catch(error => console.error(error))
   },[])
 
@@ -29,13 +35,16 @@ const Home = () => {
 
   // Use reverse geocoding to get city name from coords
   useEffect(() => {
-    getCurrentCityName(coords)
-      .then(data => {
-        const city = data.features[0].text;
-        const region = data.features[0].context.find(item => item.id.startsWith('region')).short_code.replace(/\w*[-]/, '')
-        setFilterLocation(`${city}, ${region}`)
-      })
-      .catch(err => console.error(err));
+    // only call API if coords have been set
+    if (coords.length > 0) {
+      getCurrentCityName(coords)
+        .then(data => {
+          const city = data.features[0].text;
+          const region = data.features[0].context.find(item => item.id.startsWith('region')).short_code.replace(/\w*[-]/, '')
+          setFilterLocation(`${city}, ${region}`)
+        })
+        .catch(err => console.error(err));
+    }
   },[coords])
 
   return (
@@ -48,7 +57,12 @@ const Home = () => {
         setDate={setFilterDate}
         setCoords={setCoords}
       />
-      <FeaturedGrid />
+      {topCategories.length > 0 && 
+        <FeaturedGrid 
+          categories={topCategories}  
+          loading={loadingCategories}
+        />
+      }
       <Footer />
     </Box>
   )
