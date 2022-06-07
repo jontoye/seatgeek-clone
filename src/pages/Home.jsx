@@ -57,7 +57,7 @@ const Home = () => {
         setDate={setFilterDate}
         setCoords={setCoords}
       />
-      {topCategories.length > 0 && 
+      {topCategories?.length > 0 && 
         <FeaturedGrid 
           categories={topCategories}  
           loading={loadingCategories}
