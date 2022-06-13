@@ -86,7 +86,7 @@ const FeaturedRow = ({ title, items, loading, type }) => {
                 <CardMedia
                   component='img'
                   height="200px"
-                  image={type === 'categories' ? item.image : item.performers[0].image}
+                  image={type === 'categories' ? item.image : (item.performers[0].image === null ? 'images/homepage-xsmall@2x.jpeg': item.performers[0].image)}
                   alt={type === 'categories' ? item.name : item.short_title}
                   sx={[styles.cardImg]}
                 />
